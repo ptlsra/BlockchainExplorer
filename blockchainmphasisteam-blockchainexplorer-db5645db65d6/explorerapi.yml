@@ -1,0 +1,22 @@
+version: '2.1'
+services:
+  explorer-api:
+    image: ec2-52-52-172-203.us-west-1.compute.amazonaws.com:5080/claims-explorer-api:v1.0.4
+    environment:
+      - RPC_IP=127.0.0.1
+      - RPC_PORT=22002
+      - MONGO_IP=127.0.0.1
+      - MONGO_PORT=27017
+      - NODE_NAME=MBroker
+      - API_PORT=5600
+      - DATABASE_NAME=blockchaindb
+    ports:
+      - "5600:5600"
+    depends_on:
+      broker:
+        condition: service_healthy
+    container_name: explorer-api
+    restart: on-failure
+    network_mode: "host"
+    volumes:
+      - ./logs/api-logs:/api-logs/

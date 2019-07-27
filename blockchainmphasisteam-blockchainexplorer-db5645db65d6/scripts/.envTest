@@ -1,0 +1,3 @@
+web3Provider=test1
+mongoIp=localhost
+mongoPort=27017

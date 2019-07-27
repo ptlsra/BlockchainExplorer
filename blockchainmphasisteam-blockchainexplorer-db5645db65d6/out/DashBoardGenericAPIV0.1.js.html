@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: DashBoardGenericAPIV0.1.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: DashBoardGenericAPIV0.1.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+console.log("Generic Dashboard For Analytics");
+
+console.log("Currently supported blockchains -----> Quorum");
+
+console.log("Using express js");
+
+// required libraries
+
+var fs = require("fs");
+//var Web3 = require('web3-quorum');
+
+// Web3 configured later according to the selection in dashboard
+var Web3 = require('web3-quorum');;
+var web3;
+var EthWeb3 = require('web3');
+var ethWeb3;
+const web3Admin = require('web3admin');
+var cors = require('cors');
+var xhr = require('request');
+var http = require('http');
+var shortid = require('shortid');
+var url = require('url');
+var time = require('time');
+var unixTime = require('unix-time');
+var MongoClient = require('mongodb').MongoClient;
+
+
+const express = require('express');
+const app = express();
+
+var mongoDBIp   = "localhost";
+var mongodbPort = "27017";
+// cors setting
+app.use(cors());
+app.options("*",cors());
+
+var mongoDBURL = "mongodb://localhost:27017/blockchaindb";
+
+web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8102"));
+ethWeb3 = new EthWeb3(new Web3.providers.HttpProvider("http://localhost:8102"));
+
+
+// extend admin functionality of ethweb3
+setTimeout(function(){
+    web3Admin.extend(ethWeb3);
+}, 2000)
+
+
+/**
+ * Blockchain Platform Selection.
+ * @function selectBlockchainPlatform
+ * @param {string} platformName - Blockchain platform name.
+ * 
+ * @returns {JSONObject} platformDetails - platformDetails( contains node info and blockchain platform name)
+ */
+
+app.post('/selectBlockchainPlatform',function(request, response){
+    var platformName    =   request.query.platformName;
+    console.log("******************************* Setting up blockchain platform *******************************");
+    var jsonResponse;
+
+    if(platformName == "quorum"){
+        console.log("connecting to quorum");
+        // setting up http provider for quorum blockchain
+        web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8102"));
+        ethWeb3 = new EthWeb3(new Web3.providers.HttpProvider("http://localhost:8102"));
+
+        web3.quorum.getNodeInfo(function(error, result){
+            console.log(error, result);
+            jsonResponse = result;
+
+            return response.send(jsonResponse);
+        });
+        
+    }else{
+        console.log("connecting to ethereum");
+
+    }
+});
+
+/**
+ * Get List Of Peers.
+ * @function getPeers
+ * 
+ * @returns {JSONArray} peerList - returns list of peers in the blockchain.
+ */
+app.get('/getPeers',function(request, response){
+    console.log("*************************** getPeers ***************************");
+    var peerList = ethWeb3.admin.peers;
+    var empty = [];
+    
+    var jsonResponse = {
+        "peerCount":peerList.length,
+        "peerList":peerList
+    }
+
+    console.log(("printing peers"+JSON.stringify(jsonResponse)));
+    return response.send(jsonResponse);
+});
+
+/**
+ * Get Node Information.
+ * @function getNodeInfo
+ * 
+ * @returns {JSONObject} peerNodeInfo - returns node information.
+ */
+app.get('/getNodeInfo', function(request, response){
+    console.log("***************************** getNodeInfo  **************************");
+    var peerNodeInfo = ethWeb3.admin.nodeInfo;
+    console.log(("printing nodeInfo"+JSON.stringify(peerNodeInfo)));
+    return response.send(peerNodeInfo);
+});
+
+
+/**
+ * Get Transaction Data.
+ * @function getTransaction
+ * @param   {string}     txId            - transaction id
+ * @returns {JSONObject} transactionData - returns transaction data.
+ */
+app.get('/getTransaction',function(request, response){
+    var txId    =   request.query.txId;
+    console.log("**************************** getTranaction **************************");
+    var transactionData = web3.eth.getTransaction(txId);
+    if(transactionData == null){
+        console.log("transaction not found");
+        transactionData = {
+            error:"invalid transaction id or unable to find transaction"
+        }
+    }
+    console.log(("printing transaction data "+JSON.stringify(transactionData)));
+    return response.send(transactionData);
+});
+
+/**
+ * Get Transaction Receipt.
+ * @function getTransactionReceipt
+ * @param   {string}     txId            - transaction id
+ * @returns {JSONObject} transactionReceipt - returns transaction receipt.
+ */
+app.get('/getTransactionReceipt',function(request, response){
+    var txId    =   request.query.txId;
+    console.log("**************************** getTransactionReceipt **************************");
+    var transactionReceipt = web3.eth.getTransactionReceipt(txId);
+    if(transactionReceipt == null){
+        console.log("transaction receipt not found");
+        transactionReceipt = {
+            error:"invalid transaction id"
+        }
+    }
+    console.log(("printing transaction receipt "+transactionReceipt));
+    return response.send(transactionReceipt);
+});
+
+/**
+ * Fetch Block Data 
+ * @function getBlock
+ * @param {number}          blockNumber          - block number
+ * @returns {JSONObject}    blockData            - return block data
+ */
+app.get('/getBlockData',function(request, response){
+    var blockNumber =   request.query.blockNumber;
+    console.log("***************************** getBlockData ***********************************");
+    var blockData = web3.eth.getBlock(blockNumber);
+
+    if(blockData == null){
+        console.log("block not found");
+        blockData={
+            error:"block not found"
+        }
+    }
+
+    console.log("printing block data "+blockData);
+    return response.send(blockData);
+});
+
+
+/**
+ * Fetch All Blocks From Blockchain
+ * @function getAllBlocks
+ * 
+ * @returns {JSONArray}     blockDataList       -   returns list of block data
+ */
+app.get('/getAllBlocks', function(request, response){
+    //	var MongoClient = require('mongodb').MongoClient;
+    console.log("********************* getAllBlocks ***********************");
+        var url = mongoDBURL;
+
+        MongoClient.connect(url, function(err, db) {
+            if (err) throw err;
+            console.log("fetching data from blocks collection ");
+            db.collection("blocks").find({}).toArray(function(err, result) {
+                if (err) throw err;
+                if(result.length == 0){
+                    result={
+                        error:"blocks not found"
+                    }
+                }
+                return response.send(result);
+                db.close();
+            });
+        });
+});
+
+/**
+ * Fetch All Transactions From Blockchain
+ * @function getAllTransactions
+ * 
+ * @returns {JSONArray}     transactionList       -   returns list of transactions
+ */
+app.get('/getAllTransactions',function(request, response){
+    console.log("**************************** getAllTransactions ******************************");
+    var url = mongoDBURL;
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        console.log("fetching data from transactions collection ");
+        db.collection("transactions").find({}).toArray(function(err, result) {
+            if (err) throw err;
+            if(result.length == 0){
+                result={
+                    error:"transactions not found"
+                }
+            }
+            return response.send(result);
+            db.close();
+        });
+    });
+});
+
+/**
+ * Get Transactions By Range
+ * @function getTransactionsByRange
+ * 
+ * @params {number} start       -  blocknumber 
+ * @params {number} end         -  blocknumber
+ * 
+ * @returns {JSONArray} transactionList
+ */
+app.get('/getTransactionByRange',function(request, response){
+
+    console.log("***************************** getTransactionsByRange *****************************");
+
+    var start   =   request.query.start;
+    var end     =   request.query.end;
+    
+    console.log("start  block "+start);
+    console.log("end    block "+end);
+
+    var url = mongoDBURL;
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        console.log("fetching data from transactions collection ");
+        db.collection("transactions").find({}).toArray(function(err, result) {
+            if (err) throw err;
+            console.log("fetched transaction data successfully");
+            var transactionList = result.slice(start,end);
+            if(transactionList.length == 0){
+                transactionList={
+                    error:"invalid range or transactions not found"
+                }
+            }
+            return response.send(transactionList);
+            db.close();
+        });
+    });
+});
+
+
+/**
+ * Get Blocks By Range
+ * @function getBlocksByRange
+ * 
+ * @params {number} start       - blocknumber
+ * @params {number} end         - blocknumber
+ * 
+ * @returns {JSONArray} blockList
+ */
+app.get('/getBlocksByRange', function(request, response){
+
+    console.log("***************************** getBlocksByRange *****************************");
+
+    var start   =   request.query.start;
+    var end     =   request.query.end;
+    
+    console.log("start  block "+start);
+    console.log("end    block "+end);
+
+    var url = mongoDBURL;
+    MongoClient.connect(url, function(err, db) {
+        if (err) throw err;
+        console.log("fetching data from transactions collection ");
+        db.collection("blocks").find({}).toArray(function(err, result) {
+            if (err) throw err;
+            console.log("fetched block data successfully");
+            var blockList = result.slice(start,end);
+
+            //console.log(blockList);
+            if(blockList.length == 0){
+                blockList={
+                    error:"invalid range or block not found"
+                }
+            }
+            return response.send(blockList);
+            db.close();
+        });
+    });
+});
+
+
+/**
+ * Get Live Blockchain Information
+ * @function getBlockchainInfo
+ * 
+ * @returns {JSONObject} blockChainInfo     -   returns numberOfBlocks, nmber of peers, node status, pending txns, 
+ */
+app.get('/getBlockchainInfo',function(request, response){
+    
+    console.log("***************************  getBlockChainInfo  ****************************");
+
+    var txStatus = ethWeb3.txpool.status;
+
+    var txPoolStatus = {
+        "pending":parseInt(txStatus.pending),
+        "queued":parseInt(txStatus.queued)
+    }
+
+
+    var blockChainInfo = {
+        "peerCount":ethWeb3.admin.peers.length,
+        "blockHeight":ethWeb3.eth.blockNumber,
+        "nodeStatus":ethWeb3.net.listening,
+        "txPoolStatus":txPoolStatus
+    }
+
+    if(blockChainInfo == null){
+        blockChainInfo = {
+            error:"cannot fetch blockchain info"
+        }
+    }
+    console.log(blockChainInfo);
+    return response.send(blockChainInfo);
+});
+
+
+/**
+ * Get Current BlockHeight
+ * 
+ * @function getBlockHeight
+ * 
+ * @returns {JSONObject} blockHeight    -   returns blockHeight
+ */
+
+app.get('/getBlockHeight',function(request, response){
+
+    console.log("************************ getBlockHeight **************************");
+    var blockHeight = {
+        blockHeight:web3.eth.blockNumber
+    }
+
+    if(blockHeight == null){
+        blockHeight = {
+            error:"cannot fetch blockHeight"
+        }
+
+    }
+    console.log(blockHeight);
+    return response.send(blockHeight);
+});
+
+app.use('/', function (req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    var jsonResponse = {
+        message:"Generic DashBoard API V0.1"
+    }
+    res.send(jsonResponse);
+})
+
+
+// ************** app runs at 0.0.0.0 at port 5500 *****************************
+
+app.listen(5500, '0.0.0.0',function () {
+    console.log("Application  listening on port 5500. ");
+});  </code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#getAllBlocks">getAllBlocks</a></li><li><a href="global.html#getAllTransactions">getAllTransactions</a></li><li><a href="global.html#getBlock">getBlock</a></li><li><a href="global.html#getBlockchainInfo">getBlockchainInfo</a></li><li><a href="global.html#getBlockHeight">getBlockHeight</a></li><li><a href="global.html#getBlocksByRange">getBlocksByRange</a></li><li><a href="global.html#getNodeInfo">getNodeInfo</a></li><li><a href="global.html#getPeers">getPeers</a></li><li><a href="global.html#getTransaction">getTransaction</a></li><li><a href="global.html#getTransactionReceipt">getTransactionReceipt</a></li><li><a href="global.html#getTransactionsByRange">getTransactionsByRange</a></li><li><a href="global.html#selectBlockchainPlatform">selectBlockchainPlatform</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jan 10 2018 14:38:52 GMT+0530 (IST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

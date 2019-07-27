@@ -1,0 +1,12 @@
+version: '2.1'
+services:
+  syncapi:
+    image: ec2-52-52-172-203.us-west-1.compute.amazonaws.com:5080/pythonsyncapi:v1.0.1
+    network_mode: "host"
+    environment:
+      WEB3: http://localhost:22002
+      MONGO_IP: localhost
+      MONGO_PORT: 27017
+      DATABASE_NAME: blockchaindb
+    volumes:
+      - ./logs/api-logs:/api-logs/

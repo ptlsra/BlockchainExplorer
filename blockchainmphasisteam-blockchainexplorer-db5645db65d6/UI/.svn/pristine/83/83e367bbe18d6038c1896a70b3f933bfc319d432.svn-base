@@ -1,0 +1,47 @@
+$(document).ready(function(){
+    // fetch ip address and port number
+    var ipAddress   =   localStorage.getItem("ipAddress");
+    var portNo      =   localStorage.getItem("portNo");
+    var tempLists=[];
+    var dataSets=[];
+    //function to  display list of contracts in a table
+
+    function getContracts(){
+
+        $.ajax({
+            
+            dataType: "json",
+            url: "http://"+ipAddress+":"+portNo+"/getTransactionCountByContractAddress",
+            global: false,
+            type: 'GET',
+            async: false, 
+            success: function(response) {
+               
+                    for(var index=0;index < response.length; index++){
+                        var item = response[index];
+
+
+                        tempLists.push(index+1,'<a title="'+ item.contractAddress+'"href=contract-transactions.html?contractAddress='+item.contractAddress+ '>'+item.contractAddress.substr(0, 20)+'....',item.contractName,item.txCount);
+                        dataSets.push(tempLists);
+                        tempLists=[];
+                    }
+
+                    $('#contracts').DataTable( {
+                        data: dataSets,
+                        destroy: true,
+                        searching: true,
+                        columns: [
+                            {title: "SNo" },
+                            {title: "Contract Address" },
+                            {title: "Contract Name"},
+                            {title: "Transaction Count"}
+                        ]
+                    });
+                
+            }
+        });
+    	$(".se-pre-con").fadeOut("slow");
+    }
+    getContracts();
+
+});

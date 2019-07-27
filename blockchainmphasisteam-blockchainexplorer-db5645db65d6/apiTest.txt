@@ -1,0 +1,30 @@
+[2018-06-10T13:02:06.407] [DEBUG] app - initializing app : {"appAddress":"0.0.0.0","appPort":"5005","mongoDBIp":"localhost","mongoDBPort":"27017","web3Provider":"http://52.52.172.203:22001"}
+[2018-06-10T13:02:09.513] [INFO] app - Application  listening on port  5005
+
+
+[2018-06-10T13:02:51.398] [INFO] app - getNodeInfo
+[2018-06-10T13:02:52.708] [DEBUG] app - printing nodeInfo{"id":"614142848ce4c3466f86c6127cf335daed944046dcea2c77ffa4738f29255c665b42dacd5b57fe1310efca2376a588a61cda840e2ecd1118725d037570757c2b","name":"Geth/v1.7.2-stable-df4267a2/linux-amd64/go1.10.2","enode":"enode://614142848ce4c3466f86c6127cf335daed944046dcea2c77ffa4738f29255c665b42dacd5b57fe1310efca2376a588a61cda840e2ecd1118725d037570757c2b@[::]:22000?discport=0","ip":"::","ports":{"discovery":0,"listener":22000},"listenAddr":"[::]:22000","protocols":{"eth":{"network":59893,"difficulty":20185088,"genesis":"0x8439d2042fb2945dec7d5cc6d360f0232aea4cf883de017502b6f3e0d2a270b6","head":"0xb685add031ae8322ac27513c966d27ac9c6408890d6e7d28372faf6facd90639"}}}
+
+
+[2018-06-10T13:04:43.031] [INFO] app - getPeers
+[2018-06-10T13:04:43.823] [DEBUG] app - printing peers{"peerCount":2,"peerList":[{"id":"16c25561da4429ef5af3ba2be1cb782de959b52e9348bcac449487ae71ec862493bab98f1ba0ce84cca8e373d8b0e35e5cda3efdacba0dd9e93814f93d317d8f","name":"Geth/v1.7.2-stable-df4267a2/linux-amd64/go1.10.2","caps":["eth/62","eth/63"],"network":{"localAddress":"172.17.0.2:36679","remoteAddress":"52.53.156.228:22000"},"protocols":{"eth":{"version":63,"difficulty":786432,"head":"0x704508cdfad4545488eff6a16d38d5a8e0431f98cab39a3b1d2f13c45863aa94"}}},{"id":"229bc9c4c7d66971e0f75c1cfd7cd73a6f025a93bea3a143e7fff693a20de284a14ad4b579ef4550e36cd163bdaffd22ff44156782a4c01ba5a5830894d4c84f","name":"Geth/v1.7.2-stable-df4267a2/linux-amd64/go1.10.2","caps":["eth/63"],"network":{"localAddress":"172.17.0.2:40119","remoteAddress":"52.53.254.144:22000"},"protocols":{"eth":{"version":63,"difficulty":786432,"head":"0x704508cdfad4545488eff6a16d38d5a8e0431f98cab39a3b1d2f13c45863aa94"}}}]}
+
+[2018-06-10T13:54:40.380] [INFO] app - getBlockchainInfo
+[2018-06-10T13:54:40.381] [DEBUG] app - printing transactions count : 154
+[2018-06-10T13:54:43.729] [DEBUG] app - { peerCount: 2,
+  blockHeight: 154,
+  nodeStatus: true,
+  txPoolStatus: { pending: 0, queued: 0 },
+  accountsLength: 6,
+  txCount: 154 }
+
+  
+[2018-06-10T13:55:46.942] [INFO] app - getBlockHeight
+[2018-06-10T13:55:47.589] [DEBUG] app - { blockHeight: 154 }
+
+[2018-06-10T14:00:44.417] [INFO] app - getBlocksByRange
+[2018-06-10T14:00:44.417] [DEBUG] app - start  block 0
+[2018-06-10T14:00:44.418] [DEBUG] app - end    block 155
+[2018-06-10T14:00:44.418] [DEBUG] app - fetching data from transactions collection 
+fetched block data successfully
+

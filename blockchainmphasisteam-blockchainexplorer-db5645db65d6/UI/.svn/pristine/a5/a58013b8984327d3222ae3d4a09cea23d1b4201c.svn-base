@@ -1,0 +1,249 @@
+i#dashboard-icon.glyphicon.glyphicon-dashboard{
+  margin-right:4px;
+}
+
+i#blocks-icon.fa.fa-cubes{
+  margin-right:4px;
+}
+
+i#peers-icon.fa.fa-users{
+  margin-right:4px;
+}
+
+i#node-icon.fa.fa-user{
+  margin-right:4px;
+}
+
+i#contracts-icon.fa.fa-book{
+  margin-right:4px;
+}
+
+i#explorer-icon.fa.fa-spinner{
+  font-size:26px;
+  margin-right:4px;
+  color:rgb(254,153,80);
+}
+
+i#dashboard-blocks-icon.fa.fa-cubes{
+  font-size:60px;
+  color:rgb(134,222,148);
+}
+
+div#first-row.row{
+  text-align:center;
+}
+
+i#dashboard-peers-icon.fa.fa-users{
+  font-size:60px;
+  color:rgb(144,170,238);
+}
+
+div#dashboard-first-div{
+  margin-top:60px;
+}
+
+i#dashboard-pending-txn-icon.fa.fa-exchange{
+  font-size:60px;
+  color:rgb(242,88,88);
+}
+
+h1#dashboard-blocks-heading{
+  font-family:sans-serif;
+  font-size:xx-large;
+  color:grey;
+}
+
+h1#dashboard-peers-heading{
+  font-family:sans-serif;
+  font-size:xx-large;
+  color:grey;
+}
+
+h1{
+  align-content:center;
+}
+
+h1#dashboard-pending-txn-heading{
+  font-family:sans-serif;
+  font-size:xx-large;
+  color:grey;
+}
+
+div#first-row-first-col.col-md-4{
+  padding:4px;
+  margin-top:8px;
+  margin-bottom:8px;
+}
+
+div#first-row-second-col.col-md-4{
+  padding:4px;
+  margin-bottom:8px;
+  margin-top:8px;
+}
+
+div#first-row-third-col.col-md-4{
+  padding:4px;
+  margin-bottom:8px;
+  margin-top:8px;
+}
+
+span#dashboard-blocks-span{
+  font-size:x-large;
+}
+
+span#dashboard-nodestatus-span{
+  font-size:x-large;
+}
+
+span#dashboard-accounts-span{
+  font-size:x-large;
+}
+
+span#dashboard-txns-span{
+  font-size:x-large;
+}
+
+span#dashboard-peers-span{
+  font-size:x-large;
+}
+
+span#dashboard-pending-txn-span{
+  font-size:x-large;
+}
+
+h1#blocks-first-row-heading{
+  font-family:sans-serif;
+  color:grey;
+}
+
+h1#blocks-first-row-heading{
+  font-family:sans-serif;
+  font-size:xx-large;
+  color:grey;
+}
+
+div#blocks-second-div{
+  margin-top:36px;
+  padding:8px;
+}
+
+h1#contracts-first-row-heading{
+  font-family:sans-serif;
+  color:grey;
+  font-size:xx-large;
+}
+
+h1#nodeinfo-first-row-heading{
+  font-family:sans-serif;
+  font-size:xx-large;
+  color:grey;
+}
+
+h1#peers-first-row-heading{
+  color:grey;
+  font-family:sans-serif;
+  font-size:xx-large;
+}
+
+div#contracts-second-div{
+  margin-top:36px;
+  padding:8px;
+}
+
+div#nodeinfo-second-div{
+  padding:8px;
+  margin-top:36px;
+}
+
+div#second-row.row{
+  text-align:center;
+}
+
+div#second-row-first-col.col-md-4{
+  padding:4px;
+  margin-bottom:8px;
+  margin-top:8px;
+}
+
+div#second-row-second-col.col-md-4{
+  padding:4px;
+  margin-bottom:8px;
+  margin-top:8px;
+}
+
+div#second-row-third-col.col-md-4{
+  padding:4px;
+  margin-top:8px;
+  margin-bottom:8px;
+}
+
+i#dashboard-nodestatus-icon.fa.fa-power-off{
+  font-size:60px;
+  color:rgb(255,193,33);
+}
+
+i#dashboard-accounts-icon.fa.fa-key{
+  font-size:60px;
+  color:rgb(85,158,225);
+}
+
+i#dashboard-txns-icon.fa.fa-database{
+  font-size:60px;
+  color:rgb(134,222,148);
+}
+
+div#dashboard-second-div{
+  margin-top:14px;
+}
+
+table#table1 {
+  width:75%; 
+  margin-left:15%; 
+  margin-right:15%;
+}
+table#nodeDetails{
+  width:75%;
+  margin-left:15%;
+  margin-right:15%;
+}
+
+
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}

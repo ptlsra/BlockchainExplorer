@@ -1,0 +1,1 @@
+{"appAddress":"0.0.0.0","appPort":"5600","mongoDBIp":"127.0.0.1","mongoDBPort":"27017","web3Provider":"http://127.0.0.1:22002","nodeName":"MBroker","database_name":"blockchaindb"}

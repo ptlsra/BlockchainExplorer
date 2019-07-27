@@ -1,0 +1,29 @@
+
+*********************************** DashBoardGeneric README ************************************
+
+
+1) open a new terminal 
+
+2) run start.sh
+
+3) start.sh will install required modules for SyncBlockData.py.
+
+4) open a new terminal and run SyncBlockData.py.
+
+5) open new terminal.
+
+6) run app.js
+
+
+
+NOTE : api endpoints is documented and present in out folder. open index.html in browser 
+
+
+#### Dashboard version 0.9 Development
+
+
+### Dashboard section
+
+Blocks	|	Peers	|	Pending_txns
+
+Node Status	|	Accounts	|	Tx Count

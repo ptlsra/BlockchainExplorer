@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlockchainExplorerV0.3</title>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+     <link rel="stylesheet" href="assets/css/jquery.dataTables.min.css">
+    <script type="text/javascript" src="assets/js/jquery.dataTables.min.js"></script>
+	 <script src="assets/js/modernizr.js"></script>
+	 <style>
+	/* This only works with JavaScript, 
+	if it's not present, don't show loader */
+	.no-js #loader {
+		display: none;
+	}
+	
+	.js #loader {
+		display: block;
+		position: absolute;
+		left: 100px;
+		top: 0;
+	}
+	
+	.se-pre-con {
+		position: fixed;
+		left: 0px;
+		top: 0px;
+		width: 100%;
+		height: 100%;
+		z-index: 9999;
+		background: url(assets/img/Preloader_4.gif) center no-repeat #fff;
+	}
+	</style>
+</head>
+
+<body>
+<div class="se-pre-con"></div>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header"><a class="navbar-brand navbar-link" href="index.html"><i class="fa fa-spinner" id="explorer-icon"></i>BlockchainExplorer </a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            </div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li role="presentation"><a href="index.html"><i class="glyphicon glyphicon-dashboard" id="dashboard-icon"></i>Dashboard </a></li>
+                    <li role="presentation"><a href="blocks.html"><i class="fa fa-cubes" id="blocks-icon"></i>Blocks </a></li>
+                    <li role="presentation"><a href="peers.html"><i class="fa fa-users" id="peers-icon"></i>Peers </a></li>
+                    <li role="presentation"><a href="nodeinfo.html"><i class="fa fa-user" id="node-icon"></i>NodeInfo </a></li>
+                    <li role="presentation"><a href="contracts.html"><i class="fa fa-book" id="contracts-icon"></i>Contracts </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="blocks-first-div">
+        <div class="container" id="blocks-first-div-container">
+            <div class="row" id="first-container-row">
+                <div class="col-md-3" id="first-row-first-col">
+                    <h1 id="blocks-first-row-heading">Blocks </h1></div>
+            </div>
+        </div>
+    </div>
+    <div id="blocks-second-div">
+        <div class="container" id="blocks-second-div-container">
+        
+        
+        
+          <div class="panel-group" role="tablist" aria-multiselectable="true" id="search-accordian">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#search-accordian" aria-expanded="true" href="#search-accordian .item-1">Search Block</a></h4>
+            </div>
+            <div class="panel-collapse collapse in item-1" role="tabpanel">
+                <div class="panel-body">
+                    <div id="block-search-div">
+                        <div class="container" id="search-container">
+                            <div class="row" id="search-row">
+                                <div class="col-md-3" id="first-row-first-col-search"><span class="label label-default" id="search-label">Search Block</span></div>
+                                <div class="col-md-6" id="first-row-second-col-search"><input type="number" value="0" min="0" id="block-number-field"></div>
+                                <div class="col-md-3" id="first-row-third-col-search"><button class="btn btn-default" type="button" id="single-block-search-button">Search </button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title"><a role="button" data-toggle="collapse" data-parent="#search-accordian" aria-expanded="false" href="#search-accordian .item-2">Search Blocks By Range</a></h4>
+            </div>
+            <div class="panel-collapse collapse item-2" role="tabpanel">
+                <div class="panel-body">
+                    <div class="row" id="search-row">
+                        <div class="col-md-3" id="first-row-first-col-search"><span class="label label-default" id="search-label">Blocks From :</span></div>
+                        <div class="col-md-6" id="first-row-second-col-search">
+                           
+                            <input type="number" value="0" min="0" id="from-field">
+                            <input type="number" value="1000"  id="to-field">
+                        </div>
+                        <div class="col-md-3" id="first-row-third-col-search">
+                            <button class="btn btn-default" type="button" id="block-search-button">Search </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="allblocks" >
+        <table class="table-fill" id="allBlocks" style="color:black;border:1px solid;">
+        </table>
+    </div>
+        
+        </div>
+    </div>
+    <script src="assets/js/blocks.js"></script>
+</body>
+
+</html>

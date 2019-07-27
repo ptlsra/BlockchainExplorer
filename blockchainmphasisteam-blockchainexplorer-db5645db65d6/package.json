@@ -1,0 +1,32 @@
+{
+  "name": "blockchainexplorer",
+  "version": "1.0.0",
+  "description": "Explorer for quorum and etheruem blockchain",
+  "main": "app.js",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "forever": "^0.15.3",
+    "fs": "^0.0.1-security",
+    "log4js": "^2.8.0",
+    "mongodb": "^2.2.33",
+    "mongooperations": "git+https://mphasisblockchain:mY7pcGwpxkLSFXw3y7rf@bitbucket.org/blockchainmphasisteam/mongooperations.git",
+    "morgan": "^1.9.1",
+    "web3": "^0.20.3",
+    "web3-quorum": "^0.1.1",
+    "web3admin": "^0.4.4"
+  },
+  "devDependencies": {
+    "abi-decoder": "^1.2.0"
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://mphasisblockchain@bitbucket.org/blockchainmphasisteam/blockchainexplorer.git"
+  },
+  "author": "Mphasis",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/blockchainmphasisteam/blockchainexplorer#readme"
+}

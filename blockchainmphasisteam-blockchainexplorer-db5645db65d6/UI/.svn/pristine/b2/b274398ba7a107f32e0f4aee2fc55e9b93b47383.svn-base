@@ -1,0 +1,53 @@
+/**
+ * http://usejsdoc.org/
+ */
+/*
+$(window).load(function() {
+	// Animate loader off screen
+	
+});
+*/
+
+$(document).ready(function(){
+    /**
+    * get blockchain info on startup & check every 5 seconds
+    */
+
+	function initDashBoard() {
+		var ipAddress = "54.214.155.180";
+		var portNo = "5500";
+		var nodeManagerPort = "22005";
+		localStorage.setItem("ipAddress", ipAddress);
+		localStorage.setItem("portNo", portNo);
+
+		var nodeName = "Bank";
+		localStorage.setItem("nodeName", nodeName);
+		document.getElementById("nodeName").innerHTML=nodeName;
+		$.getJSON("http://" + ipAddress + ":" + portNo + "/getBlockChainInfo", function (result) {
+			// fetch json data
+			var blockHeight = result.blockHeight;
+			var nodeStatus = result.nodeStatus;
+			var accounts = result.accountsLength;
+			if (nodeStatus == true) {
+				nodeStatus = "Running";
+			} else {
+				nodeStatus = "Stopped";
+			}
+			var peerCount = result.peerCount;
+			var pendingTxn = result.txPoolStatus.pending;
+			var txCount = result.txCount;
+
+			//Show values to the browser
+			$("#dashboard-blocks-span").text(blockHeight);
+			$("#dashboard-peers-span").text(peerCount);
+			$("#dashboard-nodestatus-span").text(nodeStatus);
+			$("#dashboard-pending-txn-span").text(pendingTxn);
+			$("#dashboard-txns-span").text(txCount);
+			$("#dashboard-accounts-span").text(accounts);
+			$(".se-pre-con").fadeOut("slow");
+		});
+	}
+	initDashBoard();
+	//call in intervals
+    setInterval(initDashBoard, 10000);
+});

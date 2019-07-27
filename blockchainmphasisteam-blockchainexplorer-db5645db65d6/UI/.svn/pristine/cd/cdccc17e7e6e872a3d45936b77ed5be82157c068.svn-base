@@ -1,0 +1,22 @@
+$(document).ready(function(){
+//	fetch ipaddress and port number
+	var ipAddress   =   localStorage.getItem("ipAddress");
+	var portNumber  =   localStorage.getItem("portNo");
+//	function to get peers info from api
+	function getNodeInfo(){
+		//var interval = setInterval(function() {
+		$.getJSON("http://"+ipAddress+":"+portNumber+"/getNodeInfo", function(result1){
+			var nodeInfo = result1;
+				//document.getElementById("node-info").innerHTML = JSON.stringify(response, undefined, 4);
+				document.getElementById("node-id").innerHTML = nodeInfo.id;
+				document.getElementById("node-name").innerHTML = nodeInfo.name;
+				document.getElementById("enode").innerHTML = nodeInfo.enode;
+				document.getElementById("ip").innerHTML = nodeInfo.ip;
+				document.getElementById("listen-address").innerHTML = nodeInfo.listenAddr;
+				document.getElementById("genesis").innerHTML = nodeInfo.protocols.eth.genesis;
+				$(".se-pre-con").fadeOut("slow");	
+		});
+	}
+//	call the function
+	getNodeInfo();
+});

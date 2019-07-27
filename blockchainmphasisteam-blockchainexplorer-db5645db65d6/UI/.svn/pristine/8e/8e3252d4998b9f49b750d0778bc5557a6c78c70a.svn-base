@@ -1,0 +1,65 @@
+
+$(document).ready(function(){
+	$("#TxDetails").hide();
+
+	$("#transactions").click(function(){
+		$("#TxDetails").show();
+	});
+
+
+	var tempLists=[];
+	var dataSets=[];
+	var ipAddress=localStorage.getItem("ipAddress");
+	var portNo=localStorage.getItem("portNo");
+
+//	function to get request params
+	var getUrlParameter = function getUrlParameter(sParam) {
+		var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+		sURLVariables = sPageURL.split('&'),
+		sParameterName,
+		i;
+
+		for (i = 0; i < sURLVariables.length; i++) {
+			sParameterName = sURLVariables[i].split('=');
+
+			if (sParameterName[0] === sParam) {
+				return sParameterName[1] === undefined ? true : sParameterName[1];
+			}
+		}
+	};
+
+
+
+//	main logic to display transaction details on to the page
+	var txid = getUrlParameter('txid');
+	document.getElementById("dashboard-heading-block").innerHTML = "Transaction Id : "+txid; 
+
+
+	$.ajax({
+
+		dataType: "json",
+		url: "http://"+ipAddress+":"+portNo+"/getTransaction?txId="+txid,
+		global: false,
+		type: 'GET',
+		async: false, //blocks window close
+		success: function(response) {
+			document.getElementById("blockNumber").innerHTML = response.blockNumber;
+			document.getElementById("blockHash").innerHTML = response.blockHash;
+			document.getElementById("from").innerHTML = response.from;
+			document.getElementById("gas").innerHTML = response.gas;
+			document.getElementById("gasPrice").innerHTML = response.gasPrice;
+			document.getElementById("hash").innerHTML = response.hash;
+			// document.getElementById("input").innerHTML = response.input;
+			//document.getElementById("input").innerHTML = "<a href=decodedinput.html?transactionHash="+response.hash+">"+response.input+"</a>";
+			document.getElementById("nonce").innerHTML = response.nonce;
+			document.getElementById("to").innerHTML = response.to;
+			document.getElementById("transactionIndex").innerHTML = response.transactionIndex;
+			document.getElementById("value").innerHTML = response.value;
+			document.getElementById("v").innerHTML = response.v;
+			document.getElementById("r").innerHTML = response.r;
+			document.getElementById("s").innerHTML = response.s;
+
+		}
+	});
+	$(".se-pre-con").fadeOut("slow");
+});

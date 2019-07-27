@@ -1,0 +1,10 @@
+
+
+modules required for python mongodb script
+
+1)pip install web3
+2)pip install pymongo
+3)pip install apscheduler
+
+
+
